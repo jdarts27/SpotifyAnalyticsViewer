@@ -1,0 +1,59 @@
+﻿@page
+@model FinalProjectSpotifyVisualizer.Pages.ConfirmDataPullModel
+@{
+	ViewData["Title"] = "Confirm Pull";
+}
+<p>Fill out form with data you would like to enter</p>
+<form class="data-collection-options" method="post">
+	<h2>Personal Information</h2>
+	<div class="form-check-top">
+		<input class="form-check-top-input" type="checkbox" asp-for="Checked.PersonalTopArtists" id="topArtists"/>
+		<label class="form-check-top-input" for="topArtists">Top Artists</label>
+		<input class="form-check-top-input" type="checkbox" asp-for="Checked.PersonalTopSongs" id="topSongs"/>
+		<label class="form-check-top-input" for="topSongs">Top Songs</label>
+		<input class="form-check-top-input" type="checkbox" asp-for="Checked.PersonalTopGenres" id="topGenres"/>
+		<label class="form-check-top-input" for="topGenres">Top Genres</label>
+	</div>
+	<h2>Global Data</h2>
+	<div class="check-global">
+		<input class="check-global-input" type="checkbox" asp-for="Checked.GlobalTopArtists" id="topArtistsGlobal"/>
+		<label class="check-global-input" for="topArtistsGlobal">Top Artists</label>
+		<input class="check-global-input" type="checkbox" asp-for="Checked.GlobalTopSongs" id="topSongsGlobal"/>
+		<label class="check-global-input" for="topSongsGlobal">Top Songs</label>
+		<input class="check-global-input" type="checkbox" asp-for="Checked.GlobalTopAlbums" id="topAlbumsGlobal"/>
+		<label class="check-global-input" for="topAlbumsGlobal">Top Albums</label>
+	</div>
+	@if(Model.Checked.PersonalTopArtists) { <div>-Personal Top Artists</div> }
+		@if(Model.Checked.PersonalTopSongs) { <div>-Personal Top Songs</div> }
+		@if(Model.Checked.PersonalTopGenres) { <div>-Personal Top Genres</div> }
+		@if(Model.Checked.GlobalTopSongs) 
+		{ 
+			<div>
+				<h2>-Global Top Tracks</h2>
+				<div class="pull-size">
+					<label for="limitSize">limit: </label>
+					<input type="text" asp-for="Limit" id="limitSize">
+				</div>
+				<div>
+					<div class="tracks">
+						@foreach (var item in Model.NewTracks)
+						{
+							<div class="card m-1" style="width:350px;">
+								<div class="card-body">
+									<h5 class="card-title">@Html.DisplayFor(modelItem => item.Track)</h5>
+									<h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(modelItem => item.Artist)</h6>
+									<p class="card-text">@Html.DisplayFor(modelItem => item.Album)</p>
+									<img src="@Html.DisplayFor(modelItem => item.ImageUrl)" width="300" height="300" alt="Release picture" />
+									<a href="@Html.DisplayFor(modelItem => item.AlbumLink)" target="_blank">Listen</a>
+								</div>
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+		}
+		@if(Model.Checked.GlobalTopArtists) { <div>-Global Top Artists</div> }
+		@if(Model.Checked.GlobalTopAlbums) { <div>-Global Top Albums</div> }
+	<button type="submit">Submit</button>
+	</form>
+</div>
